@@ -4,10 +4,11 @@ import { routerReducer, routerMiddleware } from 'react-router-redux';
 import * as StoreModule from './store';
 import { ApplicationState, reducers } from './store';
 import { History } from 'history';
+import { CustomWindow } from './types/global';
 
 export default function configureStore(history: History, initialState?: ApplicationState) {
     // Build middleware. These are functions that can process the actions before they reach the store.
-    const windowIfDefined = typeof window === 'undefined' ? null : window as any;
+    const windowIfDefined = typeof window === 'undefined' ? null : window as CustomWindow;
     // If devTools is installed, connect to it
     const devToolsExtension = windowIfDefined && windowIfDefined.devToolsExtension as () => GenericStoreEnhancer;
     const createStoreWithMiddleware = compose(
@@ -30,6 +31,6 @@ export default function configureStore(history: History, initialState?: Applicat
     return store;
 }
 
-function buildRootReducer(allReducers) {
+function buildRootReducer(allReducers: {}) {
     return combineReducers<ApplicationState>(Object.assign({}, allReducers, { routing: routerReducer }));
 }

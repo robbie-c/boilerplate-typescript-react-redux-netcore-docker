@@ -9,13 +9,14 @@ import { createBrowserHistory } from 'history';
 import configureStore from './configureStore';
 import { ApplicationState }  from './store';
 import * as RoutesModule from './routes';
+import { CustomWindow } from './types/global';
 let routes = RoutesModule.routes;
 
 // Create browser history to use in the Redux store
 const history = createBrowserHistory();
 
 // Get the application-wide store instance, prepopulating with state from the server where available.
-const initialState = (window as any).initialReduxState as ApplicationState;
+const initialState = (window as CustomWindow).initialReduxState as ApplicationState;
 const store = configureStore(history, initialState);
 
 function renderApp() {
@@ -23,8 +24,8 @@ function renderApp() {
     // and injects the app into a DOM element.
     ReactDOM.render(
         <AppContainer>
-            <Provider store={ store }>
-                <ConnectedRouter history={ history } children={ routes } />
+            <Provider store={store}>
+                <ConnectedRouter history={history} children={routes} />
             </Provider>
         </AppContainer>,
         document.getElementById('react-app')

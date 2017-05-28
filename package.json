@@ -4,7 +4,7 @@
   "scripts": {
     "start": "dotnet run",
     "build": "dotnet publish",
-    "tslint": "tslint -c tslint.json -p tsconfig.json --type-check webapp/**/*.{ts,tsx}"
+    "tslint": "tslint -c tslint.json -p tsconfig.json --type-check ClientApp/**/*.{ts,tsx}"
   },
   "dependencies": {
     "@types/history": "4.5.1",

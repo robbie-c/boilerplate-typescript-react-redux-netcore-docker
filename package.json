@@ -2,8 +2,9 @@
   "name": "boilerplate_typescript_react_redux_netcore_docker",
   "version": "0.0.0",
   "scripts": {
-    "start": "dotnet run",
-    "build": "dotnet publish",
+    "dev": "ASPNETCORE_ENVIRONMENT=Development dotnet run",
+    "start": "ASPNETCORE_ENVIRONMENT=Production dotnet run --configuration Release",
+    "build": "dotnet publish --configuration Release",
     "tslint": "tslint -c tslint.json -p tsconfig.json --type-check ClientApp/**/*.{ts,tsx}"
   },
   "dependencies": {

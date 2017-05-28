@@ -6,6 +6,7 @@ const merge = require('webpack-merge');
 
 module.exports = (env) => {
     const isDevBuild = !(env && env.prod);
+    console.log('Webpack building ' + (isDevBuild ? 'Development' : 'Production') + ' build');
 
     // Configuration in common to both client-side and server-side bundles
     const sharedConfig = () => ({

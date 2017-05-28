@@ -12,11 +12,20 @@ import * as RoutesModule from './routes';
 import { CustomWindow } from './types/global';
 let routes = RoutesModule.routes;
 
+declare const __DEV__: boolean;
+const customWindow = window as CustomWindow;
+customWindow.__DEV__ = __DEV__;
+if (__DEV__) {
+    console.log('Development Mode');
+} else {
+    console.log('Production Mode');
+}
+
 // Create browser history to use in the Redux store
 const history = createBrowserHistory();
 
 // Get the application-wide store instance, prepopulating with state from the server where available.
-const initialState = (window as CustomWindow).initialReduxState as ApplicationState;
+const initialState = customWindow.initialReduxState as ApplicationState;
 const store = configureStore(history, initialState);
 
 function renderApp() {

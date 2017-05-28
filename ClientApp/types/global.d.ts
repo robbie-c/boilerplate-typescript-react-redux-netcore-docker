@@ -3,4 +3,5 @@ import {ApplicationState} from '../store/types';
 declare interface CustomWindow extends Window {
     initialReduxState: ApplicationState;
     devToolsExtension?(): (args?: {}) => {};
+    __DEV__: boolean;
 }

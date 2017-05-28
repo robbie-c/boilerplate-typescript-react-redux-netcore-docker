@@ -1,28 +1,34 @@
 import { History } from 'history';
-import { createStore, applyMiddleware, compose, combineReducers, Store, Middleware } from 'redux';
-import thunkMiddleware from 'redux-thunk';
 import { routerReducer, routerMiddleware } from 'react-router-redux';
+import { createStore, applyMiddleware, combineReducers, Store, Middleware } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import { createLogger } from 'redux-logger';
+import createSagaMiddleware from 'redux-saga';
+import thunkMiddleware from 'redux-thunk';
 import * as ReducersModule from './reducers';
 import { ApplicationState } from './types';
-import { CustomWindow } from '../types/global';
 import { loggerOpts } from './utils/logger';
-import { createLogger } from 'redux-logger';
+import * as sagas from './sagas';
+import { CustomWindow } from '../types/global';
 
-declare const __DEV__: boolean;
+const sagaMiddleware = createSagaMiddleware();
 
-const getMiddleware = (history) => (debug: Boolean): Middleware[] => {
-    const windowIfDefined = typeof window === 'undefined' ? null : window as CustomWindow;
-    const devToolsExtension = (windowIfDefined && windowIfDefined.devToolsExtension) || (x => x) as Middleware;
-    const devMiddleware = [ devToolsExtension as Middleware, createLogger(loggerOpts) ];
-    const middleware = [ thunkMiddleware, routerMiddleware(history) ];
-    return debug ? [ ...middleware, ...devMiddleware ] : middleware;
+const getDevMiddleware = () => {
+    return [createLogger(loggerOpts)];
+};
+
+const getMiddleware = (history): Middleware[] => {
+    const customWindow = typeof window !== 'undefined' && window as CustomWindow;
+    const debug = (customWindow !== null) && customWindow.__DEV__ ;
+    const middleware = [ sagaMiddleware, thunkMiddleware, routerMiddleware(history) ];
+    return debug ? [ ...middleware, ...getDevMiddleware() ] : middleware;
 };
 
 export default function configureStore(history: History, initialState?: ApplicationState) {
     // Build middleware. These are functions that can process the actions before they reach the store.
     // If devTools is installed, connect to it
-    const createStoreWithMiddleware = compose(
-        applyMiddleware(...getMiddleware(history)(__DEV__)),
+    const createStoreWithMiddleware = composeWithDevTools(
+        applyMiddleware(...getMiddleware(history)),
     )(createStore);
 
     // Combine all reducers and instantiate the app-wide store instance
@@ -31,11 +37,14 @@ export default function configureStore(history: History, initialState?: Applicat
 
     // Enable Webpack hot module replacement for reducers
     if (module.hot) {
-        module.hot.accept('./store', () => {
-            const nextRootReducer = require<typeof ReducersModule>('./');
+        module.hot.accept('./reducers', () => {
+            const nextRootReducer = require<typeof ReducersModule>('./reducers');
             store.replaceReducer(buildRootReducer(nextRootReducer.reducers));
         });
     }
+
+    // Run all sagas
+    Object.keys(sagas).map(name => sagaMiddleware.run(sagas[name]));
 
     return store;
 }

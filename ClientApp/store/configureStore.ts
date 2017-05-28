@@ -4,7 +4,6 @@ import { createStore, applyMiddleware, combineReducers, Store, Middleware } from
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { createLogger } from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
-import thunkMiddleware from 'redux-thunk';
 import * as ReducersModule from './reducers';
 import { ApplicationState } from './types';
 import { loggerOpts } from './utils/logger';
@@ -20,7 +19,7 @@ const getDevMiddleware = () => {
 const getMiddleware = (history): Middleware[] => {
     const customWindow = typeof window !== 'undefined' && window as CustomWindow;
     const debug = (customWindow !== null) && customWindow.__DEV__ ;
-    const middleware = [ sagaMiddleware, thunkMiddleware, routerMiddleware(history) ];
+    const middleware = [ sagaMiddleware, routerMiddleware(history) ];
     return debug ? [ ...middleware, ...getDevMiddleware() ] : middleware;
 };
 

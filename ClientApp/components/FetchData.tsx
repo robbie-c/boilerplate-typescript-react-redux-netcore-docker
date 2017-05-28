@@ -24,7 +24,7 @@ class FetchData extends React.Component<WeatherForecastProps, {}> {
     }
 
     componentWillReceiveProps(nextProps: WeatherForecastProps) {
-        this.requestData(nextProps);
+        this.requestData(nextProps, this.props);
     }
 
     public render() {
@@ -64,8 +64,10 @@ class FetchData extends React.Component<WeatherForecastProps, {}> {
     }
 
     private renderPagination() {
-        let prevStartDateIndex = this.props.startDateIndex - 5;
-        let nextStartDateIndex = this.props.startDateIndex + 5;
+        const startDateIndex = this.props.startDateIndex || 0;
+
+        const prevStartDateIndex = startDateIndex - 5;
+        const nextStartDateIndex = startDateIndex + 5;
 
         return (
             <p className="clearfix text-center">

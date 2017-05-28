@@ -1,12 +1,14 @@
 import * as React from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
+import { bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
-import { ApplicationState }  from '../store';
-import * as CounterStore from '../store/Counter';
+import { CounterState } from '../store/types/counter';
+import { counterActions } from '../store/actions/counter';
+import { selectCounter } from '../store/selectors/counter';
 
 type CounterProps =
-    CounterStore.CounterState
-    & typeof CounterStore.actionCreators
+    CounterState
+    & typeof counterActions
     & RouteComponentProps<{}>;
 
 class Counter extends React.Component<CounterProps, {}> {
@@ -19,7 +21,7 @@ class Counter extends React.Component<CounterProps, {}> {
 
                 <p>Current count: <strong>{this.props.count}</strong></p>
 
-                <button onClick={() => { this.props.increment(); }}>Increment</button>
+                <button onClick={() => { this.props.incrementCount(); }}>Increment</button>
             </div>
         );
     }
@@ -27,6 +29,6 @@ class Counter extends React.Component<CounterProps, {}> {
 
 // Wire up the React component to the Redux store
 export default connect(
-    (state: ApplicationState) => state.counter, // Selects which state properties are merged into the component's props
-    CounterStore.actionCreators                 // Selects which action creators are merged into the component's props
+    selectCounter,
+    dispatch => bindActionCreators(counterActions, dispatch)
 )(Counter) as typeof Counter;

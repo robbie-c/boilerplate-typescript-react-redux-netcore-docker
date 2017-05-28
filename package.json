@@ -18,8 +18,6 @@
     "@types/react-router-redux": "5.0.1",
     "@types/reduce-reducers": "^0.1.0",
     "@types/redux-actions": "^1.2.4",
-    "@types/redux-saga": "^0.10.5",
-    "@types/reselect": "^2.2.0",
     "@types/webpack": "2.2.15",
     "@types/webpack-env": "1.13.0",
     "aspnet-prerendering": "^2.0.5",

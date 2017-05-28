@@ -7,6 +7,8 @@
     "build": "dotnet publish --configuration Release",
     "tslint": "tslint -c tslint.json -p tsconfig.json --type-check ClientApp/**/*.{ts,tsx}"
   },
+  "license": "MIT",
+  "repository": "https://github.com/robbie-c/boilerplate-typescript-react-redux-netcore-docker",
   "dependencies": {
     "@types/history": "4.5.1",
     "@types/react": "15.0.24",

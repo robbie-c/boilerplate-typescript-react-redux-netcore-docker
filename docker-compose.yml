@@ -1,0 +1,13 @@
+version: "3"
+services:
+    web:
+        build:
+          dockerfile: docker/dev.dockerfile
+          context: .
+        ports:
+            - "5000:5000"
+        depends_on:
+            - db
+    db:
+        image: "postgres"
+

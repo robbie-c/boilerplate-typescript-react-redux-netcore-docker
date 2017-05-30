@@ -33,6 +33,6 @@ Go to `locahost:5000`
 
 Development
 `docker build -f docker/dev.dockerfile -t devimage .`
-`docker run -p 5000:5000 -v $PWD:/app dhdev`
+`docker run -p 5000:5000 -v $PWD:/app devimage`
 Go to `locahost:5000`
 This will mount your working directory inside the container, so any changes you make locally will be represented in the app.

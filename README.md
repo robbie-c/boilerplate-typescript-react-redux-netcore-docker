@@ -24,3 +24,15 @@ Currently API calls for page loading are handled by sagas that are triggered by 
  - Authentication
  - Database connection (probably PostgreSQL)
  - Server side api calls (needs auth first). Instead of loading data via React lifecycle functions I suspect this is best handled by somehow pairing components/routes to a saga, and running all relevant ones before return for server side rendering.
+
+## Usage
+Production:
+`docker build -f docker/prod.dockerfile -t prodimage .`
+`docker run -p 5000:5000 prodimage`
+Go to `locahost:5000`
+
+Development
+`docker build -f docker/dev.dockerfile -t devimage .`
+`docker run -p 5000:5000 -v $PWD:/app dhdev`
+Go to `locahost:5000`
+This will mount your working directory inside the container, so any changes you make locally will be represented in the app.

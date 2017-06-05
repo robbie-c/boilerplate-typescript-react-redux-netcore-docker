@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using boilerplate_typescript_react_redux_netcore_docker.Util;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.Webpack;
@@ -30,6 +27,10 @@ namespace boilerplate_typescript_react_redux_netcore_docker
         {
             // Add framework services.
             services.AddMvc();
+
+            services.Configure<DbConnectionOptions>(Configuration);
+            services.AddScoped<IDbContext, PgDbContext>();
+            services.AddScoped<PostRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

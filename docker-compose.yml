@@ -10,6 +10,23 @@ services:
             - "5000:5000"
         depends_on:
             - db
+    dev:
+        build:
+          dockerfile: docker/dev.dockerfile
+          context: .
+        volumes:
+            - .:/app
+        ports:
+            - "5001:5000"
+        depends_on:
+            - db
+        command:
+            sleep infinity
     db:
         image: "postgres"
-
+        ports:
+            - "5432:5432"
+        environment:
+            POSTGRES_PASSWORD: docker
+            POSTGRES_USER: docker
+    

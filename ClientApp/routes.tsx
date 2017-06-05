@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Route } from 'react-router-dom';
-import { Layout } from './components/Layout';
-import Home from './components/Home';
-import FetchData from './components/FetchData';
-import Counter from './components/Counter';
+import { Layout } from './containers/Layout';
+import Home from './containers/Home';
+import FetchData from './containers/FetchData';
+import Counter from './containers/Counter';
 
 export const routes = <Layout>
     <Route exact path='/' component={ Home } />

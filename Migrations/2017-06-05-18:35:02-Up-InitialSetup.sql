@@ -1,0 +1,10 @@
+
+CREATE TABLE Posts(
+  PostId INTEGER NOT NULL UNIQUE,
+  Title TEXT NOT NULL,
+  ContentHtml TEXT NOT NULL,
+  EmailAddress TEXT NOT NULL,
+  Price NUMERIC(10, 2) NOT NULL,
+  
+  PRIMARY KEY (PostId)
+);

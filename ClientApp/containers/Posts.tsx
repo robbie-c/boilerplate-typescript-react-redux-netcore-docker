@@ -6,6 +6,7 @@ import { RequestStatus } from '../constants';
 import deepEquals from 'deep-equal';
 import { postsActions } from '../store/actions/posts';
 import { PostsState } from '../store/types/posts';
+import { TimelinePosts } from '../components/TimelinePosts';
 
 type PostsProps =
     PostsState
@@ -34,7 +35,7 @@ class Posts extends React.Component<PostsProps, {}> {
                 <p>This component demonstrates using data from the server, in a timeline format.</p>
                 {
                     this.props.requestStatus === RequestStatus.Success ? (
-                        <PostsTimeline posts={this.props.posts} />
+                        <TimelinePosts posts={this.props.posts} />
                     ) : (
                         'loading...'
                     )

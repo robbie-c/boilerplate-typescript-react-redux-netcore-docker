@@ -2,7 +2,12 @@ import { RequestStatus } from '../../constants/index';
 
 export interface PostsState {
     requestStatus: RequestStatus;
-    posts: Post[];
+    posts: PostDisplay[];
+}
+
+export interface PostDisplay {
+    post: Post;
+    isEditing: boolean;
 }
 
 export interface Post {
